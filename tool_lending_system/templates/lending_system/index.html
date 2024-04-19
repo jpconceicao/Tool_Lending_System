@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Sistema de Estoque{% endblock %}</h1>
+{% if g.user %}
+{% if g.user['level_acesso'] == 'normal' %}
+<a class="action" href="{{ url_for('lending_system.index') }}">Solicitações</a>
+<a class="action" href="{{ url_for('lending_system.index') }}">Consulta rápida</a>
+{% else %}
+<a class="action" href="{{ url_for('lending_system.index') }}">Consulta itens</a>
+<a class="action" href="{{ url_for('lending_system.index') }}">Dashboard</a>
+{% endif %}
+{% endif %}
+
+{% endblock %}

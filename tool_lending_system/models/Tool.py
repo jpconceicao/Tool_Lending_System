@@ -1,15 +1,25 @@
+from tool_lending_system.db import get_db
 
 
 class Tool:
-    def __int__(self, id=None, description=None, location=None, available=None, image_path=None, serial_number=None,
+    def __init__(self, id=None, description=None, location=None, available=None, image_path=None, serial_number=None,
                 pat_number=None):
-        self._id = id
-        self._description = description
-        self._location = location
-        self._available = available
-        self._image_path = image_path
-        self._serial_number = serial_number
-        self._pat_number = pat_number
+        if id is None:
+            self._id = id
+            self._description = description
+            self._location = location
+            self._available = available
+            self._location = location
+
+        else:
+            db = get_db()
+            query = db.execute('SELECT * FROM tool id = ?', (id, )).fetchone()
+
+            self._id = id
+            self._description = query['description']
+            self._location = query['location']
+            self._available = query['available']
+            self._location = query['location']
 
     # Getters e setters
     @property
@@ -29,6 +39,14 @@ class Tool:
         self._description = description
 
     @property
+    def code(self):
+        return self._code
+
+    @code.setter
+    def code(self, code):
+        self._code = code
+
+    @property
     def location(self):
         return self._location
 
@@ -43,30 +61,6 @@ class Tool:
     @available.setter
     def available(self, available):
         self._available = available
-
-    @property
-    def image_path(self):
-        return self._image_path
-
-    @image_path.setter
-    def image_path(self, image_path):
-        self._image_path = image_path
-
-    @property
-    def serial_number(self):
-        return self._serial_number
-
-    @serial_number.setter
-    def serial_number(self, serial_number):
-        self._serial_number = serial_number
-
-    @property
-    def pat_number(self):
-        return self._pat_number
-
-    @pat_number.setter
-    def pat_number(self, pat_number):
-        self._pat_number = pat_number
 
     def create(self):
         pass

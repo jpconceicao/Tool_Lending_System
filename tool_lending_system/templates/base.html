@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!doctype html>
+<title>{% block title %}{% endblock %} - Empréstimo de Ferramentas</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<nav class="header-master">
+  <!--  <h1><a href="/index">Estoque - AEEB</a></h1>-->
+  <div id="marca_fieb">
+    <a href="/index">JP Ferramentas</a>
+  </div>
 
-</body>
-</html>
+  <div id="login-area">
+    <div id="login-inputs">
+      <ul>
+        {% if g.user %}
+        <li><span>{{ g.user['email'] }}</span>
+        <li><a href="{{ url_for('auth.logout') }}">Desconectar</a>
+          {% else %}
+        <!--<li><a href="{{ url_for('auth.register') }}">Cadastre-se no sistema</a>-->
+        <!--<li><a href="{{ url_for('auth.login') }}">Esqueci a senha</a>-->
+          {% endif %}
+      </ul>
+
+      {% if not g.user %}
+      <form method="post">
+        <div class="login-inputs">
+          <i class="fa-solid fa-user"></i>
+          <input name="email" id="email" required>
+        </div>
+
+        <div class="login-inputs">
+          <i class="fa-solid fa-key"></i>
+          <input type="password" name="password" id="password" required>
+        </div>
+
+        <input id="access-button" type="submit" value="Acessar">
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  <hr>
+  {% for message in get_flashed_messages() %}
+  <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</section>

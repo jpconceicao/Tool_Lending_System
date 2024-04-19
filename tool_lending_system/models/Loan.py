@@ -1,16 +1,31 @@
+from tool_lending_system.db import get_db
 
 
 class Loan:
     def __init__(self, id=None, tool_id=None, user_id=None, loan_date=None, devolution_date=None, returned=None,
                 requester_name=None, requester_area=None):
-        self._id = id
-        self._tool_id = tool_id
-        self._user_id = user_id
-        self._loan_date = loan_date
-        self._devolution_date = devolution_date
-        self._returned = returned
-        self._requester_name = requester_name
-        self._requester_area = requester_area
+        if id is None:
+            self._id = id
+            self._tool_id = tool_id
+            self._user_id = user_id
+            self._loan_date = loan_date
+            self._devolution_date = devolution_date
+            self._returned = returned
+            self._requester_name = requester_name
+            self._requester_area = requester_area
+
+        else:
+            db = get_db()
+            query = db.execute('SELECT * FROM loan WHERE id = ?', (id, )).fetchone()
+
+            self._id = id
+            self._tool_id = query['tool_id']
+            self._user_id = query['user_id']
+            self._loan_date = query['loan_date']
+            self._devolution_date = query['devolution_date']
+            self._returned = query['returned']
+            self._requester_name = query['requester_name']
+            self._requester_area = query['requester_area']
 
     # Getters e setters
     @property
