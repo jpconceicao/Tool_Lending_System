@@ -35,6 +35,7 @@ CREATE TABLE loan (
   returned INTEGER NOT NULL,
   requester_name TEXT NOT NULL,
   requester_area TEXT NOT NULL,
+  obs TEXT,
   FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (tool_id) REFERENCES tool (id) ON DELETE CASCADE ON UPDATE CASCADE
 );

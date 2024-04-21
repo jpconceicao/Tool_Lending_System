@@ -14,7 +14,7 @@ class Tool:
 
         else:
             db = get_db()
-            query = db.execute('SELECT * FROM tool id = ?', (id, )).fetchone()
+            query = db.execute('SELECT * FROM tool WHERE id = ?', (id, )).fetchone()
 
             self._id = id
             self._description = query['description']
@@ -84,8 +84,9 @@ class Tool:
         finally:
             return error
 
-    def get_tool(self):
-        pass
+    def get_tool_by_id(self):
+        db = get_db()
+        return db.execute('SELECT * FROM tool WHERE id = ?', (self._id, )).fetchone()
 
     def get_tools(self):
         db = get_db()
@@ -132,7 +133,25 @@ class Tool:
             return tools
 
     def update(self):
-        pass
+        db = get_db()
+        error = None
+        try:
+            code = db.execute('SELECT code FROM tool WHERE code = ?', (self._code,)).fetchone()
+            if code and code['code'] != self._code:
+                error = 'Código já existe no sistema! Tente outro.'
+            else:
+                db.execute('UPDATE tool SET description = ?, code = ?, location = ? WHERE id = ?',
+                           (self._description, self._code, self._location, self._id))
+                db.commit()
+
+        except Exception as e:
+            error = e.args[0]
+            print("Erro ocorrido: ", e)
+            print(e.args[0])
+            traceback.print_exc()
+
+        finally:
+            return error
 
     def delete(self):
         pass

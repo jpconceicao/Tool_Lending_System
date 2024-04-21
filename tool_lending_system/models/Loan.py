@@ -1,3 +1,5 @@
+import traceback
+
 from tool_lending_system.db import get_db
 
 
@@ -95,7 +97,25 @@ class Loan:
         self._requester_area = requester_area
 
     def create(self):
-        pass
+        db = get_db()
+        error = None
+        try:
+            db.execute('''INSERT INTO loan (tool_id, user_id, requester_name, requester_area, obs, returned) 
+            VALUES (?, ?, ?, ?, ?, ?)''', (self._tool_id, self._user_id, self._requester_name,
+                                           self._requester_area, self._obs, self._returned))
+            db.commit()
+
+            db.execute('UPDATE tool SET available = 0 WHERE id = ?', (self._tool_id, ))
+            db.commit()
+
+        except Exception as e:
+            error = e.args[0]
+            print("Erro ocorrido: ", e)
+            print(e.args[0])
+            traceback.print_exc()
+
+        finally:
+            return error
 
     def get_loan(self):
         pass
