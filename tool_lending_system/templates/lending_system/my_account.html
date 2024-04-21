@@ -1,4 +1,30 @@
 {% extends 'lending_system/index.html' %}
 
+{% block my_account %}
+<form class="add-form" method="post">
+    <div class="container_form">
+        <article class="filtro">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" class="typed_input" value="{{ user['name'] }}" required>
+        </article>
+    </div>
+
+    <div class="container_form">
+        <article class="filtro">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" class="typed_input" value="{{ user['email'] }}" required>
+        </article>
+    </div>
+
+    <div class="container_form">
+        <article class="filtro">
+            <label for="password">Senha: </label>
+            <input type="password" id="password" name="password" class="typed_input">
+        </article>
+    </div>
+
+    <button type="submit" class="button">Atualizar</button>
+</form>
+{% endblock %}
 
 

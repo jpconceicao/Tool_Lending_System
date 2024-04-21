@@ -11,17 +11,17 @@
 {% block search_tools %}
 <div class="search-filter">
 
-    <form class="form_filtro" method="post">
+    <form class="filter-form" method="post">
         <div class="container_form">
             <article class="filtro">
-                <label for="description">Descrição do item</label>
+                <label for="description">Descrição: </label>
                 <input type="text" id="description" name="description" class="typed_input">
             </article>
         </div>
 
         <div class="container_form">
             <article class="filtro">
-                <label for="location">Localização</label>
+                <label for="location">Localização: </label>
                 <select name="location" id="location" class="drop-down">
                     <option value="todos" selected>Todos</option>
                     <option value="Armário 1">Armário 1</option>
@@ -35,10 +35,10 @@
 
         <div class="container_form">
             <article class="filtro">
-                <label for="available">Disponível</label>
+                <label for="available">Disponível: </label>
                 <select name="available" id="available" class="drop-down">
-                    <option value="1" selected>Disponível</option>
-                    <option value="0">Indisponível</option>
+                    <option value="1" selected>Sim</option>
+                    <option value="0">Não</option>
                 </select>
             </article>
         </div>
@@ -50,7 +50,7 @@
 
 {% block tools %}
 {% if tools %}
-<table class="tabelas">
+<table class="tables">
     <thead>
     <tr>
         <th>Código</th>

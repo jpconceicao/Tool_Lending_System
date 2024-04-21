@@ -1,3 +1,5 @@
+import traceback
+
 from tool_lending_system.db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -19,8 +21,8 @@ class User:
             self._id = id
             self._name = query['name']
             self._email = query['email']
-            self._password = query['status']
-            self._status = query['password']
+            self._password = query['password']
+            self._status = query['status']
             self._level = query['level']
 
     # Getters e setters
@@ -75,11 +77,46 @@ class User:
     def create(self):
         pass
 
-    def get_user(self):
-        pass
+    def get_user_by_id(self):
+        db = get_db()
+        return db.execute('SELECT * FROM user WHERE id = ?', (self._id, )).fetchone()
 
     def update(self):
         pass
+
+    def update_without_password(self):
+        db = get_db()
+        error = None
+        try:
+            db.execute('UPDATE user SET name = ?, email = ? WHERE id = ?',
+                       (self._name, self._email, self._id))
+            db.commit()
+
+        except Exception as e:
+            error = e.args[0]
+            print("Erro ocorrido: ", e)
+            print(e.args[0])
+            traceback.print_exc()
+
+        finally:
+            return error
+
+    def update_with_password(self):
+        db = get_db()
+        error = None
+        try:
+            db.execute('UPDATE user SET name = ?, email = ?, password = ? WHERE id = ?',
+                       (self._name, self._email, generate_password_hash(self._password), self._id))
+            db.commit()
+
+        except Exception as e:
+            error = e.args[0]
+            print("Erro ocorrido: ", e)
+            print(e.args[0])
+            traceback.print_exc()
+
+        finally:
+            return error
 
     def delete(self):
         pass

@@ -1,0 +1,83 @@
+{% extends 'lending_system/index.html' %}
+
+{% block search_loans %}
+<div class="search-filter">
+
+    <form class="filter-form" method="post">
+        <div class="container_form">
+            <article class="filtro">
+                <label for="description">Descrição do item</label>
+                <input type="text" id="description" name="description" class="typed_input">
+            </article>
+        </div>
+
+        <div class="container_form">
+            <article class="filtro">
+                <label for="returned">Fechado</label>
+                <select name="returned" id="returned" class="drop-down">
+                    <option value="0" selected>Não</option>
+                    <option value="1">Sim</option>
+                </select>
+            </article>
+        </div>
+        <button type="submit" class="button">Pesquisar</button>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block loans %}
+{% if loans %}
+<table class="tables">
+    <thead>
+    <tr>
+        <th>Descrição da ferramenta</th>
+        <th>Código</th>
+        <th>Emprestado por</th>
+        <th>Data empréstimo</th>
+        <th>Solicitante</th>
+        <th>Área Solicitante</th>
+        <th>Observação</th>
+        <th>Status</th>
+        <th>Encerrado por</th>
+        <th>Encerrar</th>
+        <th>Editar</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for loan in loans %}
+    <tr>
+        <td>{{ loan['description'] }}</td>
+        <td>{{ loan['code'] }}</td>
+        <td>{{ loan['email'] }}</td>
+        <td>{{ loan['loan_date'].strftime('%Y-%m-%d') }}</td>
+        <td>{{ loan['requester_name'] }}</td>
+        <td>{{ loan['requester_area'] }}</td>
+        <td>{{ loan['obs'] }}</td>
+        {% if loan['returned'] == 0 %}
+        <td>Pendente</td>
+        <td> - </td>
+        <td>
+            <a href="{{url_for('lending_system.close_loan', id=loan['id'])}}">
+          <i class="fa-solid fa-check"></i>
+        </a>
+        </td>
+        <td>
+            <a href="{{url_for('lending_system.edit_loan', id=loan['id'])}}">
+                <i class="fa-regular fa-pen-to-square"></i>
+            </a>
+        </td>
+        {% else %}
+        <td>Fechado</td>
+        <td>{{ loan['email_checked_out'] }}</td>
+        <td> -- </td>
+        <td> -- </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

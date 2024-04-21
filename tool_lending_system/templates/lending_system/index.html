@@ -5,11 +5,11 @@
 {% if g.user %}
 {% if g.user['level'] == 'normal' %}
 <a class="action" href="{{ url_for('lending_system.tools') }}">Ferramentas</a>
-<a class="action" href="{{ url_for('lending_system.tools') }}">Empréstimos</a>
+<a class="action" href="{{ url_for('lending_system.loans') }}">Empréstimos</a>
 {% else %}
 <a class="action" href="{{ url_for('lending_system.index') }}">Dashboard</a>
 {% endif %}
-<a class="action" href="{{ url_for('lending_system.index') }}">Minha conta</a>
+<a class="action" href="{{ url_for('lending_system.my_account') }}">Minha conta</a>
 {% endif %}
 {% endblock %}
 
@@ -20,10 +20,13 @@
 {% block tools %}{% endblock %}
 
 {% block add_tool %}{% endblock %}
-
 {% block edit_tool %}{% endblock %}
-
 {% block to_loan %}{% endblock %}
+
+{% block search_loans %}{% endblock %}
+{% block loans %}{% endblock %}
+
+{% block edit_loan %}{% endblock %}
 
 {% block my_account %}{% endblock %}
 {% endblock %}

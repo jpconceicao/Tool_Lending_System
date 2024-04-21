@@ -3,6 +3,8 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
+from datetime import datetime
+
 from tool_lending_system.auth import login_required
 from tool_lending_system.db import get_db
 
@@ -115,3 +117,87 @@ def add_tool():
 
         return render_template('lending_system/tools/add_tool.html')
 
+
+@bp.route('/loans', methods=('GET', 'POST'))
+@login_required
+def loans():
+    if request.method == 'GET':
+        return render_template('lending_system/loans.html')
+
+    elif request.method == 'POST':
+        loan = Loan(description=request.form['description'],
+                    returned=request.form['returned'])
+
+        loans_list = loan.get_loans()
+        return render_template('lending_system/loans.html', loans=loans_list)
+
+
+@bp.route('/loans/close_loan/<int:id>', methods=('GET', ))
+@login_required
+def close_loan(id):
+    loan = Loan(id=id)
+    loan.returned = 1
+    loan.user_id_checked_out = g.user['id']
+    date = datetime.now()
+    loan.devolution_date = date
+
+    loan.close_loan()
+    flash("Empréstimo finalizado com sucesso!")
+    return redirect(url_for('lending_system.loans'))
+
+
+@bp.route('/loans/edit_loan/<int:id>', methods=('GET', 'POST'))
+@login_required
+def edit_loan(id):
+    if request.method == 'GET':
+        loan_obj = Loan(id=id)
+        loan = loan_obj.get_loan_by_id()
+
+        tool_obj = Tool(id=id)
+        tool = tool_obj.get_tool_by_id()
+        return render_template('lending_system/loans/edit_loan.html', tool=tool, loan=loan)
+
+    elif request.method == 'POST':
+        loan = Loan(id=id)
+        loan.requester_name = request.form['requester_name']
+        loan.requester_area = request.form['requester_area']
+        loan.obs = request.form['obs']
+
+        error = loan.update()
+
+        if error is not None:
+            flash(error)
+        else:
+            flash('Edição do empréstimo realizada com sucesso!')
+
+        return redirect(url_for('lending_system.loans'))
+
+
+@bp.route('/my_account', methods=('GET', 'POST'))
+@login_required
+def my_account():
+    if request.method == 'GET':
+        return render_template('lending_system/my_account.html', user=g.user)
+
+    elif request.method == 'POST':
+        user = User(id=g.user['id'])
+        error = None
+
+        if request.form['password'] == "":
+            user.name = request.form['name']
+            user.email = request.form['email']
+            error = user.update_without_password()
+
+        else:
+            user.name = request.form['name']
+            user.email = request.form['email']
+            user.password = request.form['password']
+            error = user.update_with_password()
+
+        if error is not None:
+            flash(error)
+        else:
+            flash('Edição do seu usuário realizada com sucesso!')
+            g.user = user.get_user_by_id()
+
+        return redirect(url_for('lending_system.my_account'))

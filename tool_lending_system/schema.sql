@@ -32,11 +32,13 @@ CREATE TABLE loan (
   user_id INTEGER NOT NULL,
   loan_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   devolution_date TIMESTAMP,
+  user_id_checked_out INTEGER,
   returned INTEGER NOT NULL,
   requester_name TEXT NOT NULL,
   requester_area TEXT NOT NULL,
   obs TEXT,
   FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (user_id_checked_out) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (tool_id) REFERENCES tool (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
