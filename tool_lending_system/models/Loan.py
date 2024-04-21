@@ -169,8 +169,8 @@ class Loan:
                                                 (SELECT code FROM tool WHERE id = loan.tool_id) as code,
                                                 loan_date, requester_name, requester_area, obs, returned, 
                                                 (SELECT email FROM user WHERE id = loan.user_id_checked_out) as email_checked_out
-                                                FROM loan WHERE returned = ? AND conc_conditions order by id desc''',
-                                   (self._returned, conc_conditions)).fetchall()
+                                                FROM loan WHERE returned = ? AND {conc_conditions} order by id desc''',
+                                   (self._returned, )).fetchall()
 
             else:
                 print("executou")  # DEBUG
