@@ -3,7 +3,7 @@ from tool_lending_system.db import get_db
 
 class Loan:
     def __init__(self, id=None, tool_id=None, user_id=None, loan_date=None, devolution_date=None, returned=None,
-                requester_name=None, requester_area=None):
+                requester_name=None, requester_area=None, obs=None):
         if id is None:
             self._id = id
             self._tool_id = tool_id
@@ -13,6 +13,7 @@ class Loan:
             self._returned = returned
             self._requester_name = requester_name
             self._requester_area = requester_area
+            self._obs = obs  # PENDÊNCIA: Implementar o campo de observação
 
         else:
             db = get_db()
@@ -26,6 +27,7 @@ class Loan:
             self._returned = query['returned']
             self._requester_name = query['requester_name']
             self._requester_area = query['requester_area']
+            self._obs = obs
 
     # Getters e setters
     @property

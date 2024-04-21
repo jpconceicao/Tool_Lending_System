@@ -14,13 +14,13 @@ CREATE TABLE user (
 
 INSERT INTO user (name, email, password, level, status)
 VALUES ('admin', 'admin@email.com', 'scrypt:32768:8:1$iCCzRVEakBq89YDo$cbce04983c1562a33d5d66a672607aa710dd2012429cce51fe783b152c050dbed79bd16f704d708c66dc1fc7f8fd9df133122c49e79d52cc8b493a0f5148be0b',
-        'admin', 'ativo'
+        'admin', 'active'
        );
 
 CREATE TABLE tool (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   description TEXT NOT NULL,
-  code TEXT NOT NULL,
+  code TEXT NOT NULL UNIQUE,
   available INTEGER NOT NULL,
   location TEXT NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP

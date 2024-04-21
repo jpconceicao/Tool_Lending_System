@@ -1,0 +1,92 @@
+{% extends 'lending_system/index.html' %}
+
+{% block submenus %}
+<div class="subitens">
+    <a class="action" href="{{ url_for('lending_system.search_tools') }}">Estoque</a>
+    <a class="action" href="{{ url_for('lending_system.add_tool') }}">Adicionar</a>
+</div>
+<hr>
+{% endblock %}
+
+{% block search_tools %}
+<div class="search-filter">
+
+    <form class="form_filtro" method="post">
+        <div class="container_form">
+            <article class="filtro">
+                <label for="description">Descrição do item</label>
+                <input type="text" id="description" name="description" class="typed_input">
+            </article>
+        </div>
+
+        <div class="container_form">
+            <article class="filtro">
+                <label for="location">Localização</label>
+                <select name="location" id="location" class="drop-down">
+                    <option value="todos" selected>Todos</option>
+                    <option value="Armário 1">Armário 1</option>
+                    <option value="Armário 2">Armário 2</option>
+                    <option value="Armário 3">Armário 3</option>
+                    <option value="Armário 4">Armário 4</option>
+                    <option value="Armário 5">Armário 5</option>
+                </select>
+            </article>
+        </div>
+
+        <div class="container_form">
+            <article class="filtro">
+                <label for="available">Disponível</label>
+                <select name="available" id="available" class="drop-down">
+                    <option value="1" selected>Disponível</option>
+                    <option value="0">Indisponível</option>
+                </select>
+            </article>
+        </div>
+        <button type="submit" class="button">Pesquisar</button>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block tools %}
+{% if tools %}
+<table class="tabelas">
+    <thead>
+    <tr>
+        <th>Código</th>
+        <th>Descrição da ferramenta</th>
+        <th>Localização</th>
+        <th>Disponível</th>
+        <th>Emprestar</th>
+        <th>Editar</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for tool in tools %}
+    <tr>
+        <td>{{ tool['code'] }}</td>
+        <td>{{ tool['description'] }}</td>
+        <td>{{ tool['location'] }}</td>
+        {% if tool['available'] == 1 %}
+        <td>Sim</td>
+        <td>
+            <a href="{{ url_for('lending_system.to_loan', id=tool['id']) }}">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </a>
+        </td>
+        {% else %}
+        <td>Não</td>
+        <td>--</td>
+        {% endif %}
+        <td>
+            <a href="{{url_for('lending_system.edit_tool', id=tool['id'])}}">
+                <i class="fa-regular fa-pen-to-square"></i>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

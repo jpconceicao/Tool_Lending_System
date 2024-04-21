@@ -1,13 +1,14 @@
+import traceback
+
 from tool_lending_system.db import get_db
 
 
 class Tool:
-    def __init__(self, id=None, description=None, location=None, available=None, image_path=None, serial_number=None,
-                pat_number=None):
+    def __init__(self, id=None, description=None, code=None, available=None, location=None):
         if id is None:
             self._id = id
             self._description = description
-            self._location = location
+            self._code = code
             self._available = available
             self._location = location
 
@@ -17,7 +18,7 @@ class Tool:
 
             self._id = id
             self._description = query['description']
-            self._location = query['location']
+            self._code = query['code']
             self._available = query['available']
             self._location = query['location']
 
@@ -63,13 +64,72 @@ class Tool:
         self._available = available
 
     def create(self):
-        pass
+        db = get_db()
+        error = None
+        try:
+            code = db.execute('SELECT code FROM tool WHERE code = ?', (self._code, )).fetchone()
+            if code:
+                error = 'Código já existe no sistema! Tente outro.'
+            else:
+                db.execute('INSERT INTO tool (description, code, available, location) VALUES (?, ?, ?, ?)',
+                           (self._description, self._code, self._available, self._location))
+                db.commit()
+
+        except Exception as e:
+            error = e.args[0]
+            print("Erro ocorrido: ", e)
+            print(e.args[0])
+            traceback.print_exc()
+
+        finally:
+            return error
 
     def get_tool(self):
         pass
 
     def get_tools(self):
-        pass
+        db = get_db()
+        if self._description == '' and self._location == 'todos':
+            tools = db.execute('SELECT * FROM tool WHERE available = ? order by id', (self._available, )).fetchall()
+            return tools
+
+        elif self._description != '' and self._location == 'todos':
+            if ' ' in self._description:
+                # Aplica a busca concatenada
+                parts = self._description.split(" ")  # Separa as strings
+                conditions = [f"description LIKE '%{part}%'" for part in parts]  # Cria lista das buscas p/ o SQL
+                conc_conditions = " AND ".join(conditions)
+                tools = db.execute(f'''SELECT * FROM tool WHERE available = ? AND {conc_conditions} 
+                                                    order by id desc;''',
+                                   (self._available, )).fetchall()
+
+            else:
+                tools = db.execute('''SELECT * FROM tool WHERE available = ? AND description LIKE ('%' || ? || '%') 
+                                    order by id desc;''',
+                                   (self._available, self._description)).fetchall()
+            return tools
+
+        elif self._description == '' and self._location != 'todos':
+            tools = db.execute('''SELECT * FROM tool WHERE available = ? AND location = ? 
+                                                order by id desc;''',
+                               (self._available, self._location)).fetchall()
+            return tools
+
+        elif self._description != '' and self._location != 'todos':
+            if ' ' in self._description:
+                # Aplica a busca concatenada
+                parts = self._description.split(" ")  # Separa as strings
+                conditions = [f"description LIKE '%{part}%'" for part in parts]  # Cria lista das buscas p/ o SQL
+                conc_conditions = " AND ".join(conditions)
+                tools = db.execute(f'''SELECT * FROM tool WHERE available = ? AND {conc_conditions} AND location = ?  
+                                                    order by id desc;''',
+                                   (self._available, self._location)).fetchall()
+
+            else:
+                tools = db.execute('''SELECT * FROM tool WHERE available = ? AND description LIKE ('%' || ? || '%') 
+                                    AND location = ? order by id desc;''',
+                                   (self._available, self._description, self._location)).fetchall()
+            return tools
 
     def update(self):
         pass
