@@ -125,4 +125,50 @@ header h1 {
 
 /* Menus de busca e botões em geral */
 
+.filter-form {
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+    color: #5c627a;
+}
+
+.add-form {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #5c627a;
+}
+
+.filter-form label, .add-form label {
+    padding-right: 10px;
+
+}
+
+.typed_input {
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.drop-down {
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+
+.button {
+    border-radius: 10px;
+    background-color: #5c627a;
+    color: white;
+}
+/* ----------------------------------------------- */
+
+/* Tabelas */
+
 /* ----------------------------------------------- */

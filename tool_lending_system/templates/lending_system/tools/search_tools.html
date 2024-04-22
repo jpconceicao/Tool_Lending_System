@@ -1,49 +1,49 @@
 {% extends 'lending_system/index.html' %}
 
 {% block submenus %}
-    <div class="subitens">
-        <a class="action" href="{{ url_for('lending_system.search_tools') }}">Estoque</a>
-        <a class="action" href="{{ url_for('lending_system.add_tool') }}">Adicionar</a>
-    </div>
+<div class="subitens">
+    <a class="action" href="{{ url_for('lending_system.search_tools') }}">Estoque</a>
+    <a class="action" href="{{ url_for('lending_system.add_tool') }}">Adicionar</a>
+</div>
 <hr>
 {% endblock %}
 
 {% block search_tools %}
 <h3 class="subitens-title">Pesquisar Ferramentas</h3>
 
-    <form class="filter-form" method="post">
-        <div class="container_form">
-            <article class="filtro">
-                <label for="description">Descrição: </label>
-                <input type="text" id="description" name="description" class="typed_input">
-            </article>
-        </div>
+<form class="filter-form" method="post">
+    <div class="container_form">
+        <article class="filter">
+            <label for="description">Descrição</label>
+            <input type="text" id="description" name="description" class="typed_input">
+        </article>
+    </div>
 
-        <div class="container_form">
-            <article class="filtro">
-                <label for="location">Localização: </label>
-                <select name="location" id="location" class="drop-down">
-                    <option value="todos" selected>Todos</option>
-                    <option value="Armário 1">Armário 1</option>
-                    <option value="Armário 2">Armário 2</option>
-                    <option value="Armário 3">Armário 3</option>
-                    <option value="Armário 4">Armário 4</option>
-                    <option value="Armário 5">Armário 5</option>
-                </select>
-            </article>
-        </div>
+    <div class="container_form">
+        <article class="filter">
+            <label for="location">Localização</label>
+            <select name="location" id="location" class="drop-down">
+                <option value="todos" selected>Todos</option>
+                <option value="Armário 1">Armário 1</option>
+                <option value="Armário 2">Armário 2</option>
+                <option value="Armário 3">Armário 3</option>
+                <option value="Armário 4">Armário 4</option>
+                <option value="Armário 5">Armário 5</option>
+            </select>
+        </article>
+    </div>
 
-        <div class="container_form">
-            <article class="filtro">
-                <label for="available">Disponível: </label>
-                <select name="available" id="available" class="drop-down">
-                    <option value="1" selected>Sim</option>
-                    <option value="0">Não</option>
-                </select>
-            </article>
-        </div>
-        <button type="submit" class="button">Pesquisar</button>
-    </form>
+    <div class="container_form">
+        <article class="filter">
+            <label for="available">Disponível</label>
+            <select name="available" id="available" class="drop-down">
+                <option value="1" selected>Sim</option>
+                <option value="0">Não</option>
+            </select>
+        </article>
+    </div>
+    <button type="submit" class="button">Pesquisar</button>
+</form>
 {% endblock %}
 
 {% block tools %}
