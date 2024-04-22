@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}JP Ferramentas{% endblock %}</h1>
-{% if g.user %}
-{% if g.user['level'] == 'normal' %}
-<a class="action" href="{{ url_for('lending_system.tools') }}">Ferramentas</a>
-<a class="action" href="{{ url_for('lending_system.loans') }}">Empréstimos</a>
-{% else %}
-<a class="action" href="{{ url_for('lending_system.index') }}">Dashboard</a>
-{% endif %}
-<a class="action" href="{{ url_for('lending_system.my_account') }}">Minha conta</a>
-{% endif %}
+<h1>{% block title %}Controle de Ferramentas{% endblock %}</h1>
+<div class="options-user">
+    {% if g.user['level'] == 'normal' %}
+    <a class="action" href="{{ url_for('lending_system.tools') }}">Ferramentas</a>
+    <a class="action" href="{{ url_for('lending_system.loans') }}">Empréstimos</a>
+    {% else %}
+    <a class="action" href="{{ url_for('lending_system.index') }}">Dashboard</a>
+    {% endif %}
+    <a class="action" href="{{ url_for('lending_system.my_account') }}">Minha conta</a>
+</div>
 {% endblock %}
 
 {% block content %}

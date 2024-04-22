@@ -1,9 +1,12 @@
 {% extends 'lending_system/index.html' %}
 
 {% block submenus %}
-<div class="subitens">
-    <a class="action" href="{{ url_for('lending_system.search_tools') }}">Estoque</a>
-    <a class="action" href="{{ url_for('lending_system.add_tool') }}">Adicionar</a>
+<div class="submenu">
+    <h2 class="subitens-title">Ferramentas</h2>
+    <div class="subitens">
+        <a class="action" href="{{ url_for('lending_system.search_tools') }}">Estoque</a>
+        <a class="action" href="{{ url_for('lending_system.add_tool') }}">Adicionar</a>
+    </div>
 </div>
 <hr>
 {% endblock %}

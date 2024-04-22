@@ -136,8 +136,8 @@ class Tool:
         db = get_db()
         error = None
         try:
-            code = db.execute('SELECT code FROM tool WHERE code = ?', (self._code,)).fetchone()
-            if code and code['code'] != self._code:
+            id = db.execute('SELECT id FROM tool WHERE code = ?', (self._code,)).fetchone()
+            if id and id['id'] != self._id:
                 error = 'Código já existe no sistema! Tente outro.'
             else:
                 db.execute('UPDATE tool SET description = ?, code = ?, location = ? WHERE id = ?',

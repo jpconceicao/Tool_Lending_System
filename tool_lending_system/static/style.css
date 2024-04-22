@@ -1,0 +1,128 @@
+html {
+    font-family: sans-serif;
+    background: #eee;
+}
+
+body {
+    max-width: 1920px;
+    margin: 0 auto;
+    background: white;
+}
+/* Estilização do cabeçalho do site */
+#header-master {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+    height: 90px;
+    background-color: #5c627a;
+}
+
+#logo {
+    text-decoration: none;
+}
+
+#logo h1{
+    color: white;
+    font-size: 35px;
+}
+
+#login-area form{
+    display: flex;
+    align-items: center;
+}
+
+#login-area span, #login-area li a{
+    padding: 10px 5px 10px 10px;
+}
+
+#login-area a:hover {
+    background-color: #a3b6a2;
+    color: white;
+    border-radius: 10px;
+}
+
+.login-inputs {
+    padding: 8px;
+}
+
+#login-area ul {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+#login-area a, #login-area li {
+    text-decoration: none;
+    list-style-type: none;
+    color: white;
+}
+
+#login-area li {
+    margin-left: 8px;
+}
+
+/* ----------------------------------------------- */
+
+/* Título e menus do usuário */
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    font-family: serif;
+    color: #5c627a;
+    margin: 1rem 0;
+    padding-left: 8px;
+}
+
+.options-user a{
+    text-decoration: none;
+    padding: 8px;
+    color: #5c627a;
+}
+
+.options-user a:hover{
+    padding: 8px;
+    background-color: #5c627a;
+    color: white;
+    border-radius: 10px;
+}
+/* ----------------------------------------------- */
+
+/* Subitens das páginas, quando tiver */
+
+.subitens-title{
+    display: inline-block; /* Faz com que o h1 tenha largura apenas do conteúdo */
+    margin: 0px;
+    margin-bottom: 10px;
+    padding: 4px;
+    color: white;
+    background-color: #5c627a;
+    border-radius: 10px;
+}
+
+.subitens {
+    display: flex;
+}
+
+.subitens a{
+    text-decoration: none;
+    padding: 8px;
+    color: #5c627a;
+}
+
+.subitens a:hover{
+    background-color: #5c627a;
+    color: white;
+    border-radius: 10px;
+}
+/* ----------------------------------------------- */
+
+/* Menus de busca e botões em geral */
+
+/* ----------------------------------------------- */

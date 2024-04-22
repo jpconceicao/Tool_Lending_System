@@ -1,15 +1,15 @@
 {% extends 'lending_system/index.html' %}
 
 {% block submenus %}
-<div class="subitens">
-    <a class="action" href="{{ url_for('lending_system.search_tools') }}">Estoque</a>
-    <a class="action" href="{{ url_for('lending_system.add_tool') }}">Adicionar</a>
-</div>
+    <div class="subitens">
+        <a class="action" href="{{ url_for('lending_system.search_tools') }}">Estoque</a>
+        <a class="action" href="{{ url_for('lending_system.add_tool') }}">Adicionar</a>
+    </div>
 <hr>
 {% endblock %}
 
 {% block search_tools %}
-<div class="search-filter">
+<h3 class="subitens-title">Pesquisar Ferramentas</h3>
 
     <form class="filter-form" method="post">
         <div class="container_form">
@@ -44,8 +44,6 @@
         </div>
         <button type="submit" class="button">Pesquisar</button>
     </form>
-
-</div>
 {% endblock %}
 
 {% block tools %}

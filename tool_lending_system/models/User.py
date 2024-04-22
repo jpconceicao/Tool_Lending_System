@@ -88,9 +88,13 @@ class User:
         db = get_db()
         error = None
         try:
-            db.execute('UPDATE user SET name = ?, email = ? WHERE id = ?',
-                       (self._name, self._email, self._id))
-            db.commit()
+            id = db.execute('SELECT id FROM user WHERE email = ?', (self._email, )).fetchone()
+            if id and id['id'] != self._id:
+                error = 'Email já existe no sistema! Tente outro.'
+            else:
+                db.execute('UPDATE user SET name = ?, email = ? WHERE id = ?',
+                           (self._name, self._email, self._id))
+                db.commit()
 
         except Exception as e:
             error = e.args[0]

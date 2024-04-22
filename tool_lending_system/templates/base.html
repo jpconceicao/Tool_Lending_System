@@ -3,25 +3,19 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<nav class="header-master">
+<nav id="header-master">
   <!--  <h1><a href="/index">Estoque - AEEB</a></h1>-->
   <div id="marca_fieb">
-    <a href="/index">JP Ferramentas</a>
+    <a href="/index" id="logo"><h1>Planta de Montagem</h1></a>
   </div>
 
   <div id="login-area">
-    <div id="login-inputs">
+      {% if g.user %}
       <ul>
-        {% if g.user %}
         <li><span>{{ g.user['email'] }}</span>
         <li><a href="{{ url_for('auth.logout') }}">Desconectar</a>
-          {% else %}
-        <!--<li><a href="{{ url_for('auth.register') }}">Cadastre-se no sistema</a>-->
-        <!--<li><a href="{{ url_for('auth.login') }}">Esqueci a senha</a>-->
-          {% endif %}
       </ul>
-
-      {% if not g.user %}
+      {% else %}
       <form method="post">
         <div class="login-inputs">
           <i class="fa-solid fa-user"></i>
@@ -36,7 +30,6 @@
         <input id="access-button" type="submit" value="Acessar">
       </form>
       {% endif %}
-    </div>
   </div>
 </nav>
 
