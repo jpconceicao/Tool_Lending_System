@@ -3,27 +3,27 @@
 {% block edit_loan %}
 <form class="add-form" method="post">
     <div class="container_form">
-        <article class="filtro">
+        <article class="filter">
             <label>{{tool['description']}} - Código: {{tool['code']}}</label>
         </article>
     </div>
 
     <div class="container_form">
-        <article class="filtro">
+        <article class="filter">
             <label for="requester_name">Solicitante:</label>
             <input type="text" id="requester_name" name="requester_name" class="typed_input" value="{{ loan['requester_name'] }}" required>
         </article>
     </div>
 
     <div class="container_form">
-        <article class="filtro">
+        <article class="filter">
             <label for="requester_area">Área do Solicitante:</label>
             <input type="text" id="requester_area" name="requester_area" class="typed_input" value="{{ loan['requester_area'] }}" required>
         </article>
     </div>
 
     <div class="container_form">
-        <article class="filtro">
+        <article class="filter">
             <label for="obs">Observação: </label>
             <input type="text" id="obs" name="obs" class="typed_input" value="{{ loan['obs'] }}">
         </article>

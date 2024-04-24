@@ -96,8 +96,8 @@ def login_required(view):
 def login_adm_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
-        if g.user['level_acesso'] != 'admin':
-            return redirect(url_for('estoque.index'))
+        if g.user['level'] != 'admin':
+            return redirect(url_for('lending_system.index'))
 
         return view(**kwargs)
 

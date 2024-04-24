@@ -1,0 +1,9 @@
+{% extends 'admin/dashboard.html' %}
+
+{% block submenus %}
+<div class="subitens">
+    <a class="action" href="{{ url_for('admin.dashboard') }}">Logs Empréstimo</a>
+    <a class="action" href="{{ url_for('admin.dashboard') }}">Logs Usuários</a>
+</div>
+<hr>
+{% endblock %}
