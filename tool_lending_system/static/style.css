@@ -15,7 +15,7 @@ body {
     justify-content: space-between;
     padding: 0 0.5rem;
     height: 90px;
-    background-color: #5c627a;
+    background-color: #2A6496;
 }
 
 #logo {
@@ -75,7 +75,7 @@ header {
 
 header h1 {
     font-family: serif;
-    color: #5c627a;
+    color: #2A6496;
     margin: 1rem 0;
     padding-left: 8px;
 }
@@ -83,12 +83,12 @@ header h1 {
 .options-user a{
     text-decoration: none;
     padding: 8px;
-    color: #5c627a;
+    color: #2A6496;
 }
 
 .options-user a:hover{
     padding: 8px;
-    background-color: #5c627a;
+    background-color: #2A6496;
     color: white;
     border-radius: 10px;
 }
@@ -102,8 +102,8 @@ header h1 {
     margin-bottom: 10px;
     padding: 4px;
     color: white;
-    background-color: #5c627a;
-    border-radius: 10px;
+    background-color: #2A6496;
+    border-radius: 5px;
 }
 
 .subitens {
@@ -113,11 +113,11 @@ header h1 {
 .subitens a{
     text-decoration: none;
     padding: 8px;
-    color: #5c627a;
+    color: #2A6496;
 }
 
 .subitens a:hover{
-    background-color: #5c627a;
+    background-color: #2A6496;
     color: white;
     border-radius: 10px;
 }
@@ -126,24 +126,33 @@ header h1 {
 /* Menus de busca e botões em geral */
 
 .filter-form {
-    width: 800px;
+    width: 650px;
     display: flex;
     justify-content: space-between;
-    color: #5c627a;
+    color: #2A6496;
 }
 
 .add-form {
-    width: 800px;
+    width: 400px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    color: #5c627a;
+}
+
+.filter {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.filter label {
+    margin-right: 10px;
 }
 
 .filter-form label, .add-form label {
     padding-right: 10px;
 
 }
+
 
 .typed_input {
     padding: 5px;
@@ -163,12 +172,46 @@ header h1 {
 }
 
 .button {
-    border-radius: 10px;
-    background-color: #5c627a;
+    border-radius: 5px;
+    width: 100px;
+    padding: 10px;
+    background-color: #2A6496;
     color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-form button {
+
+}
+
+.button:hover {
+    font-size: 18px;
 }
 /* ----------------------------------------------- */
 
 /* Tabelas */
+.tables {
+    width: 100%; /* Faz a tabela ocupar toda a largura disponível */
+    border-collapse: collapse; /* Remove a separação entre as células */
+    border-radius: 5px;
+    color: #2A6496;
+}
 
+.tables th {
+    text-align: center; /* Centraliza o texto do cabeçalho */
+    padding: 10px; /* Adiciona espaçamento interno aos cabeçalhos */
+    background-color: #f2f2f2; /* Cor de fundo do cabeçalho */
+}
+
+.tables td {
+    text-align: center; /* Centraliza o texto das células */
+    padding: 8px; /* Adiciona espaçamento interno às células */
+    border-bottom: 1px solid #ddd; /* Adiciona uma linha inferior para separar as células */
+}
+
+.tables tr:hover {
+    background-color: #e5e5e5; /* Cor de fundo quando o mouse passar por cima */
+}
 /* ----------------------------------------------- */
