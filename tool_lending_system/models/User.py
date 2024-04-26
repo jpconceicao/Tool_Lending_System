@@ -75,7 +75,35 @@ class User:
         self._level = level
 
     def create(self):
-        pass
+        db = get_db()
+        error = None
+
+        try:
+            user = db.execute('SELECT id FROM user WHERE email = ?', (self._email, )).fetchone()
+            if user:
+                error = 'ERRO: Email já cadastrado no sistema!'
+            else:
+                db.execute('INSERT INTO user (name, email, password, status, level) VALUES (?, ?, ?, ?, ?)',
+                           (self._name, self._email, generate_password_hash(self._password), self._status, 'normal'))
+                db.commit()
+
+        except Exception as e:
+            error = e.args[0]
+            print("Erro ocorrido: ", e)
+            print(e.args[0])
+            traceback.print_exc()
+
+        finally:
+            return error
+
+    def get_users(self):
+        db = get_db()
+
+        if self.email == '':
+            return db.execute('''SELECT id, name, email, status FROM user''').fetchall()
+        else:
+            return db.execute('''SELECT id, name, email, status FROM user WHERE email LIKE ('%' || ? || '%')''',
+                              (self._email, )).fetchall()
 
     def get_user_by_id(self):
         db = get_db()

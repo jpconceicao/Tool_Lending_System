@@ -1,0 +1,50 @@
+{% extends 'admin/users.html' %}
+
+{% block search_user %}
+<h3 class="subitens-title">Pesquisar Usuários</h3>
+
+<form class="filter-form" method="post">
+    <div class="container_form">
+        <article class="filter">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="typed_input">
+        </article>
+    </div>
+
+    <button type="submit" class="button">Pesquisar</button>
+</form>
+{% endblock %}
+
+{% block users %}
+{% if users %}
+<table class="tables">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Editar</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <tr>
+        <td>{{ user['name'] }}</td>
+        <td>{{ user['email'] }}</td>
+        {% if user['status'] == 'active' %}
+        <td>Ativo</td>
+        {% else %}
+        <td>Inativo</td>
+        {% endif %}
+        <td>
+            <a href="{{url_for('admin.edit_user', id=user['id'])}}">
+                <i class="fa-regular fa-pen-to-square"></i>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

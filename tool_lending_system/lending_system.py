@@ -35,15 +35,16 @@ def search_tools():
         return render_template('lending_system/tools/search_tools.html')
 
     elif request.method == 'POST':
-        print(request.form['description'])
-        print(request.form['available'])
-        print(request.form['location'])
+        print(request.form['description'])  # DEBUG
+        print(request.form['available'])  # DEBUG
+        print(request.form['location'])  # DEBUG
 
         tool_obj = Tool(description=request.form['description'],
                         location=request.form['location'],
                         available=int(request.form['available'])
                         )
         tools_list = tool_obj.get_tools()
+
         return render_template('lending_system/tools/search_tools.html', tools=tools_list)
 
 
