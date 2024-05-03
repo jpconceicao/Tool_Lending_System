@@ -100,14 +100,14 @@ class User:
         db = get_db()
 
         if self.email == '':
-            return db.execute('''SELECT id, name, email, status FROM user''').fetchall()
+            return db.execute('''SELECT id, name, email, status, level FROM user''').fetchall()
         else:
-            return db.execute('''SELECT id, name, email, status FROM user WHERE email LIKE ('%' || ? || '%')''',
+            return db.execute('''SELECT id, name, email, status, level FROM user WHERE email LIKE ('%' || ? || '%')''',
                               (self._email, )).fetchall()
 
     def get_user_by_id(self):
         db = get_db()
-        return db.execute('SELECT * FROM user WHERE id = ?', (self._id, )).fetchone()
+        return db.execute('SELECT id, name, email, status, level FROM user WHERE id = ?', (self._id, )).fetchone()
 
     def update(self):
         pass
@@ -115,13 +115,17 @@ class User:
     def update_without_password(self):
         db = get_db()
         error = None
+
+        if self._status is None:
+            self._status = 'active'
+
         try:
             id = db.execute('SELECT id FROM user WHERE email = ?', (self._email, )).fetchone()
             if id and id['id'] != self._id:
                 error = 'Email já existe no sistema! Tente outro.'
             else:
-                db.execute('UPDATE user SET name = ?, email = ? WHERE id = ?',
-                           (self._name, self._email, self._id))
+                db.execute('UPDATE user SET name = ?, email = ?, status = ? WHERE id = ?',
+                           (self._name, self._email, self._status, self._id))
                 db.commit()
 
         except Exception as e:
@@ -136,9 +140,13 @@ class User:
     def update_with_password(self):
         db = get_db()
         error = None
+
+        if self._status is None:
+            self._status = 'active'
+
         try:
-            db.execute('UPDATE user SET name = ?, email = ?, password = ? WHERE id = ?',
-                       (self._name, self._email, generate_password_hash(self._password), self._id))
+            db.execute('UPDATE user SET name = ?, email = ?, password = ?, status = ? WHERE id = ?',
+                       (self._name, self._email, generate_password_hash(self._password), self._status, self._id))
             db.commit()
 
         except Exception as e:

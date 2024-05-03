@@ -10,6 +10,7 @@ from tool_lending_system.db import get_db
 from tool_lending_system.models.User import User
 from tool_lending_system.models.Tool import Tool
 from tool_lending_system.models.Loan import Loan
+from tool_lending_system.models.Location import Location
 
 bp = Blueprint('admin', __name__)
 
@@ -75,7 +76,27 @@ def edit_user(id):
         return render_template('admin/users/edit_user.html', user=user)
 
     elif request.method == 'POST':
-        return render_template('admin/users/edit_user.html')
+        user_obj = User(id=id)
+        error = None
+
+        if request.form['password'] == "":
+            user_obj.name = request.form['name']
+            user_obj.email = request.form['email']
+            user_obj.status = request.form['status']
+            error = user_obj.update_without_password()
+        else:
+            user_obj.name = request.form['name']
+            user_obj.email = request.form['email']
+            user_obj.password = request.form['password']
+            user_obj.status = request.form['status']
+            error = user_obj.update_with_password()
+
+        if error is not None:
+            flash(error)
+        else:
+            flash('Edição do seu usuário realizada com sucesso!')
+
+        return redirect(url_for('admin.search_user'))
 
 
 @bp.route('/dashboard/location', methods=('GET', ))
@@ -83,6 +104,53 @@ def edit_user(id):
 @login_adm_required
 def location():
     return render_template('admin/location.html')
+
+
+@bp.route('/dashboard/search_location', methods=('GET', 'POST'))
+@login_required
+@login_adm_required
+def search_location():
+    if request.method == 'GET':
+        return render_template('admin/locations/search_location.html')
+
+    if request.method == 'POST':
+        location = Location(name=request.form['name'])
+        locations = location.get_locations()
+        return render_template('admin/locations/search_location.html', locations=locations)
+
+
+@bp.route('/dashboard/add_location', methods=('GET', 'POST'))
+@login_required
+@login_adm_required
+def add_location():
+    if request.method == 'GET':
+        return render_template('admin/locations/add_location.html')
+
+    elif request.method == 'POST':
+        location_obj = Location(name=request.form['name'])
+        error = None
+
+        error = location_obj.create()
+        if error is not None:
+            flash(error)
+            return redirect(url_for('admin.add_location'))
+        else:
+            flash('Local criado com sucesso!')
+
+        return redirect(url_for('admin.search_location'))
+
+
+@bp.route('/dashboard/edit_location/<int:id>', methods=('GET', 'POST'))
+@login_required
+@login_adm_required
+def edit_location(id):
+    if request.method == 'GET':
+        location_obj = User(id=id)
+        location = location_obj.get_location_by_id()
+        return render_template('admin/users/edit_location.html', location=location)
+
+    elif request.method == 'POST':
+        pass
 
 
 @bp.route('/dashboard/logs', methods=('GET', ))

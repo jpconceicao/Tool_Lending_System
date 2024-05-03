@@ -21,14 +21,12 @@
 
     <div class="container_form">
         <article class="filter">
-            <label for="location">Localização</label>
-            <select name="location" id="location" class="drop-down">
+            <label for="location_id">Localização</label>
+            <select name="location_id" id="location_id" class="drop-down">
                 <option value="todos" selected>Todos</option>
-                <option value="Armário 1">Armário 1</option>
-                <option value="Armário 2">Armário 2</option>
-                <option value="Armário 3">Armário 3</option>
-                <option value="Armário 4">Armário 4</option>
-                <option value="Armário 5">Armário 5</option>
+                {% for location in locations %}
+                <option value={{location['id']}}>{{location['name']}}</option>
+                {% endfor %}
             </select>
         </article>
     </div>

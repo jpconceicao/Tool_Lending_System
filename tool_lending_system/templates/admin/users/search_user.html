@@ -7,7 +7,7 @@
     <div class="container_form">
         <article class="filter">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="typed_input">
+            <input type="text" id="email" name="email" class="typed_input">
         </article>
     </div>
 
@@ -28,6 +28,7 @@
     </thead>
     <tbody>
     {% for user in users %}
+    {% if user['level'] != 'admin' %}
     <tr>
         <td>{{ user['name'] }}</td>
         <td>{{ user['email'] }}</td>
@@ -42,6 +43,7 @@
             </a>
         </td>
     </tr>
+    {% endif %}
     {% endfor %}
 
     </tbody>

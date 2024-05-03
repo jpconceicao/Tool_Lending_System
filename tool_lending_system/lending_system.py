@@ -11,6 +11,7 @@ from tool_lending_system.db import get_db
 from tool_lending_system.models.User import User
 from tool_lending_system.models.Tool import Tool
 from tool_lending_system.models.Loan import Loan
+from tool_lending_system.models.Location import Location
 
 bp = Blueprint('lending_system', __name__)
 
@@ -31,21 +32,26 @@ def tools():
 @bp.route('/tools/search_tools', methods=('GET', 'POST'))
 @login_required
 def search_tools():
+    location_obj = Location(name='')
+    locations = location_obj.get_locations()
+
     if request.method == 'GET':
-        return render_template('lending_system/tools/search_tools.html')
+        return render_template('lending_system/tools/search_tools.html',
+                               locations=locations)
 
     elif request.method == 'POST':
         print(request.form['description'])  # DEBUG
         print(request.form['available'])  # DEBUG
-        print(request.form['location'])  # DEBUG
+        print(request.form['location_id'])  # DEBUG
 
         tool_obj = Tool(description=request.form['description'],
-                        location=request.form['location'],
+                        location_id=request.form['location_id'],
                         available=int(request.form['available'])
                         )
         tools_list = tool_obj.get_tools()
 
-        return render_template('lending_system/tools/search_tools.html', tools=tools_list)
+        return render_template('lending_system/tools/search_tools.html',
+                               locations=locations, tools=tools_list)
 
 
 @bp.route('/tools/to_loan/<int:id>', methods=('GET', 'POST'))
@@ -77,15 +83,20 @@ def to_loan(id):
 @login_required
 def edit_tool(id):
     if request.method == 'GET':
+        location_obj = Location(name='')
+        locations = location_obj.get_locations()
         tool_obj = Tool(id=id)
         tool = tool_obj.get_tool_by_id()
-        return render_template('lending_system/tools/edit_tool.html', tool=tool)
+        return render_template('lending_system/tools/edit_tool.html',
+                               tool=tool,
+                               locations=locations)
 
     elif request.method == 'POST':
         tool = Tool(description=request.form['description'],
-                    location=request.form['location'],
+                    location_id=request.form['location_id'],
                     code=request.form['code'],
                     )
+        print(request.form['location_id'])  # DEBUG
         tool.id = id
         error = tool.update()
 

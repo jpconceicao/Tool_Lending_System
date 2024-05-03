@@ -1,0 +1,45 @@
+{% extends 'admin/users.html' %}
+
+
+
+{% block edit_user %}
+<h3 class="subitens-title">Editar Usuário</h3>
+
+<form class="add-form" method="post">
+    <div class="container_form">
+        <article class="filter">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" class="typed_input" value="{{user['name']}}" required>
+        </article>
+    </div>
+
+    <div class="container_form">
+        <article class="filter">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="typed_input" value="{{user['email']}}" required>
+        </article>
+    </div>
+
+    <div class="container_form">
+        <article class="filter">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" class="typed_input" >
+        </article>
+    </div>
+
+    <div class="container_form">
+        <article class="filter">
+            {% if user['status'] == 'active' %}
+            <label><input type="radio" name="status" value="active" checked> Ativo</label>
+            <label><input type="radio" name="status" value="inactive"> Inativo</label>
+            {% else %}
+            <label><input type="radio" name="status" value="active"> Ativo</label>
+            <label><input type="radio" name="status" value="inactive" checked> Inativo</label>
+            {% endif %}
+        </article>
+    </div>
+
+    <button type="submit" class="button">Adicionar</button>
+</form>
+
+{% endblock %}
