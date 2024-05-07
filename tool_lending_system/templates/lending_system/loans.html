@@ -13,10 +13,10 @@
 
         <div class="container_form">
             <article class="filtro">
-                <label for="returned">Fechado</label>
+                <label for="returned">Status</label>
                 <select name="returned" id="returned" class="drop-down">
-                    <option value="0" selected>Não</option>
-                    <option value="1">Sim</option>
+                    <option value="0" selected>Pendente</option>
+                    <option value="1">Entregue</option>
                 </select>
             </article>
         </div>
@@ -39,6 +39,7 @@
         <th>Área Solicitante</th>
         <th>Observação</th>
         <th>Status</th>
+        <th>Data devolução</th>
         <th>Encerrado por</th>
         <th>Encerrar</th>
         <th>Editar</th>
@@ -58,6 +59,7 @@
         {% if loan['returned'] == 0 %}
         <td>Pendente</td>
         <td> - </td>
+        <td> - </td>
         <td>
             <a href="{{url_for('lending_system.close_loan', id=loan['id'])}}">
           <i class="fa-solid fa-check"></i>
@@ -69,7 +71,8 @@
             </a>
         </td>
         {% else %}
-        <td>Fechado</td>
+        <td>Entregue</td>
+        <td>{{ loan['devolution_date'].strftime('%Y-%m-%d') }}</td>
         <td>{{ loan['email_checked_out'] }}</td>
         <td> -- </td>
         <td> -- </td>

@@ -69,7 +69,25 @@ class Location:
         return location
 
     def update(self):
-        pass
+        db = get_db()
+        error = None
+        try:
+            id = db.execute('SELECT id FROM location WHERE name = ?', (self._name, )).fetchone()
+            if id and id['id'] != self._id:
+                error = 'O nome já existe no sistema! Tente novamente com outro.'
+            else:
+                db.execute('UPDATE location SET name = ? WHERE id = ?',
+                           (self._name, self._id))
+                db.commit()
+
+        except Exception as e:
+            error = e.args[0]
+            print("Erro ocorrido: ", e)
+            print(e.args[0])
+            traceback.print_exc()
+
+        finally:
+            return error
 
     def delete(self):
         pass

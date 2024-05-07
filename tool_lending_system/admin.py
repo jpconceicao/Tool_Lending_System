@@ -145,12 +145,22 @@ def add_location():
 @login_adm_required
 def edit_location(id):
     if request.method == 'GET':
-        location_obj = User(id=id)
+        location_obj = Location(id=id)
         location = location_obj.get_location_by_id()
-        return render_template('admin/users/edit_location.html', location=location)
+        return render_template('admin/locations/edit_location.html', location=location)
 
     elif request.method == 'POST':
-        pass
+        location = Location(id=id)
+        location.name = request.form['name']
+        error = None
+
+        error = location.update()
+        if error is not None:
+            flash(error)
+        else:
+            flash('Local atualizado com sucesso!')
+
+        return redirect(url_for('admin.search_location'))
 
 
 @bp.route('/dashboard/logs', methods=('GET', ))

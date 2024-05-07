@@ -14,6 +14,17 @@
 <form class="add-form" method="post">
     <div class="container_form">
         <article class="filter">
+            <label for="location_id">Localização</label>
+            <select name="location_id" id="location_id" class="drop-down">
+                {% for location in locations %}
+                <option value={{location['id']}}>{{location['name']}}</option>
+                {% endfor %}
+            </select>
+        </article>
+    </div>
+
+    <div class="container_form">
+        <article class="filter">
             <label for="description">Descrição do item</label>
             <input type="text" id="description" name="description" class="typed_input" required>
         </article>
@@ -21,21 +32,15 @@
 
     <div class="container_form">
         <article class="filter">
-            <label for="location">Localização</label>
-            <select name="location" id="location" class="drop-down">
-                <option value="Armário 1">Armário 1</option>
-                <option value="Armário 2">Armário 2</option>
-                <option value="Armário 3">Armário 3</option>
-                <option value="Armário 4">Armário 4</option>
-                <option value="Armário 5">Armário 5</option>
-            </select>
+            <label for="code">Código</label>
+            <input type="text" id="code" name="code" class="typed_input" required>
         </article>
     </div>
 
     <div class="container_form">
         <article class="filter">
-            <label for="code">Código</label>
-            <input type="text" id="code" name="code" class="typed_input" required>
+            <label for="obs">Observação</label>
+            <input type="text" id="obs" name="obs" class="typed_input" required>
         </article>
     </div>
 

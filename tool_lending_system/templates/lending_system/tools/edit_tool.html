@@ -14,6 +14,21 @@
 <form class="add-form" method="post">
     <div class="container_form">
         <article class="filter">
+            <label for="location_id">Localização</label>
+            <select name="location_id" id="location_id" class="drop-down">
+                {% for location in locations %}
+                {% if location['name'] == tool['location'] %}
+                <option value={{location['id']}} selected>{{location['name']}}</option>
+                {% else %}
+                <option value={{location['id']}}>{{location['name']}}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </article>
+    </div>
+
+    <div class="container_form">
+        <article class="filter">
             <label for="description">Descrição do item</label>
             <input type="text" id="description" name="description" class="typed_input" value="{{tool['description']}}" required>
         </article>
@@ -28,16 +43,8 @@
 
     <div class="container_form">
         <article class="filter">
-            <label for="location_id">Localização</label>
-            <select name="location_id" id="location_id" class="drop-down">
-                {% for location in locations %}
-                {% if location['name'] == tool['location'] %}
-                <option value={{location['id']}} selected>{{location['name']}}</option>
-                {% else %}
-                <option value={{location['id']}}>{{location['name']}}</option>
-                {% endif %}
-                {% endfor %}
-            </select>
+            <label for="obs">Observação</label>
+            <input type="text" id="obs" name="obs" class="typed_input" value="{{tool['obs']}}">
         </article>
     </div>
 

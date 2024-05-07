@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'admin/location.html' %}
 
-</body>
-</html>
+{% block edit_location %}
+<h3 class="subitens-title">Editar Armário / Local</h3>
+
+<form class="add-form" method="post">
+    <div class="container_form">
+        <article class="filter">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" class="typed_input" value="{{location['name']}}" required>
+        </article>
+    </div>
+
+    <button type="submit" class="button">Salvar</button>
+</form>
+{% endblock %}

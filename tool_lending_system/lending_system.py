@@ -67,6 +67,7 @@ def to_loan(id):
                     user_id=g.user['id'],
                     requester_name=request.form['requester_name'],
                     requester_area=request.form['requester_area'],
+                    loan_date=datetime.now(),
                     obs=request.form['obs'],
                     returned=0)
         error = loan.create()
@@ -95,6 +96,7 @@ def edit_tool(id):
         tool = Tool(description=request.form['description'],
                     location_id=request.form['location_id'],
                     code=request.form['code'],
+                    obs=request.form['obs']
                     )
         print(request.form['location_id'])  # DEBUG
         tool.id = id
@@ -112,12 +114,16 @@ def edit_tool(id):
 @login_required
 def add_tool():
     if request.method == 'GET':
-        return render_template('lending_system/tools/add_tool.html')
+        location_obj = Location(name='')
+        locations = location_obj.get_locations()
+        return render_template('lending_system/tools/add_tool.html',
+                               locations=locations)
 
     elif request.method == 'POST':
         tool = Tool(description=request.form['description'],
-                    location=request.form['location'],
+                    location_id=request.form['location_id'],
                     code=request.form['code'],
+                    obs=request.form['obs'],
                     available=1
                     )
         error = tool.create()
@@ -127,7 +133,7 @@ def add_tool():
         else:
             flash("Ferramenta inserida com sucesso!")
 
-        return render_template('lending_system/tools/add_tool.html')
+        return redirect(url_for('lending_system.add_tool'))
 
 
 @bp.route('/loans', methods=('GET', 'POST'))

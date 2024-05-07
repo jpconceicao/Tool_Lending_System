@@ -122,9 +122,9 @@ class Loan:
         db = get_db()
         error = None
         try:
-            db.execute('''INSERT INTO loan (tool_id, user_id, requester_name, requester_area, obs, returned) 
-            VALUES (?, ?, ?, ?, ?, ?)''', (self._tool_id, self._user_id, self._requester_name,
-                                           self._requester_area, self._obs, self._returned))
+            db.execute('''INSERT INTO loan (tool_id, user_id, requester_name, requester_area, obs, returned, loan_date) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)''', (self._tool_id, self._user_id, self._requester_name,
+                                           self._requester_area, self._obs, self._returned, self._loan_date))
             db.commit()
 
             db.execute('UPDATE tool SET available = 0 WHERE id = ?', (self._tool_id,))
@@ -151,7 +151,7 @@ class Loan:
                                 (SELECT description FROM tool WHERE id = loan.tool_id)as description,
                                 (SELECT email FROM user WHERE id = loan.user_id) as email,
                                 (SELECT code FROM tool WHERE id = loan.tool_id) as code,
-                                loan_date, requester_name, requester_area, obs, returned, 
+                                loan_date, requester_name, requester_area, obs, returned, devolution_date, 
                                 (SELECT email FROM user WHERE id = loan.user_id_checked_out) as email_checked_out
                                 FROM loan WHERE returned = ? order by id desc''',
                                (self._returned, )).fetchall()
@@ -164,12 +164,12 @@ class Loan:
                 conditions = [f"description LIKE '%{part}%'" for part in parts]  # Cria lista das buscas p/ o SQL
                 conc_conditions = " AND ".join(conditions)
                 loans = db.execute(f'''SELECT id,
-                                                (SELECT description FROM tool WHERE id = loan.tool_id)as description,
-                                                (SELECT email FROM user WHERE id = loan.user_id) as email,
-                                                (SELECT code FROM tool WHERE id = loan.tool_id) as code,
-                                                loan_date, requester_name, requester_area, obs, returned, 
-                                                (SELECT email FROM user WHERE id = loan.user_id_checked_out) as email_checked_out
-                                                FROM loan WHERE returned = ? AND {conc_conditions} order by id desc''',
+                                    (SELECT description FROM tool WHERE id = loan.tool_id)as description,
+                                    (SELECT email FROM user WHERE id = loan.user_id) as email,
+                                    (SELECT code FROM tool WHERE id = loan.tool_id) as code,
+                                    loan_date, requester_name, requester_area, obs, returned,  devolution_date, 
+                                    (SELECT email FROM user WHERE id = loan.user_id_checked_out) as email_checked_out
+                                    FROM loan WHERE returned = ? AND {conc_conditions} order by id desc''',
                                    (self._returned, )).fetchall()
 
             else:
@@ -178,7 +178,7 @@ class Loan:
                                 (SELECT description FROM tool WHERE id = loan.tool_id)as description,
                                 (SELECT email FROM user WHERE id = loan.user_id) as email,
                                 (SELECT code FROM tool WHERE id = loan.tool_id) as code,
-                                loan_date, requester_name, requester_area, obs, returned, 
+                                loan_date, requester_name, requester_area, obs, returned, devolution_date, 
                                 (SELECT email FROM user WHERE id = loan.user_id_checked_out) as email_checked_out
                                 FROM loan WHERE returned = ? AND description LIKE ('%' || ? || '%') order by id desc''',
                                    (self._returned, self._description)).fetchall()

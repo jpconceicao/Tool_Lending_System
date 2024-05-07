@@ -52,6 +52,7 @@
         <th>Código</th>
         <th>Descrição da ferramenta</th>
         <th>Localização</th>
+        <th>Obs</th>
         <th>Disponível</th>
         <th>Emprestar</th>
         <th>Editar</th>
@@ -63,6 +64,7 @@
         <td>{{ tool['code'] }}</td>
         <td>{{ tool['description'] }}</td>
         <td>{{ tool['location'] }}</td>
+        <td>{{ tool['obs'] }}</td>
         {% if tool['available'] == 1 %}
         <td>Sim</td>
         <td>
